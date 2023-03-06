@@ -3,9 +3,9 @@ import styles from './BigInput.module.scss'
 
 export default function BigInput(props) {
   return (
-    <>
+    <div className={`${styles['big-input']}`}>
       <p className={`${styles['big-input__title']}`}>{props.title}</p>
-      <input className={`${styles['big-input']}`}></input>
-    </>
+      <input className={`${styles['big-input__input']}`} type={props.type}></input>
+    </div>
   );
 }
