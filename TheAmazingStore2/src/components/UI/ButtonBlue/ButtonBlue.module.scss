@@ -1,0 +1,10 @@
+@import '../../../constants/consts.scss';
+
+.button-blue {
+    @extend .button2;
+    justify-self: end;
+    align-self: end;
+    margin: 33px 40px 10px;
+    background-color: $main-color;
+    color: white;
+}
