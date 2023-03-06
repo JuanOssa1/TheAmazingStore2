@@ -1,0 +1,9 @@
+@import "../../constants/consts.scss";
+
+.app-footer{
+    width: 100vw;
+    height: 58px;
+    background-color: $main-color;
+    //Poner mas pequeños las cajas de los elementos y usar el space between
+    //align-self: baseline;
+}
