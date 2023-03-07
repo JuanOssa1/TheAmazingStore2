@@ -1,0 +1,69 @@
+@import "../../../constants/consts.scss";
+.hotel-card{
+    display: flex;
+    //flex-direction: row;
+    justify-content: space-between;
+    &__image{
+       width: 311px;
+       height: 331px; 
+    }
+    &__info{
+        display: flex;
+        flex-direction: row;
+    }
+    &__specs{
+        display: flex;
+        flex-direction: column;
+    }
+    &__description{
+        @extend .text1;
+        color: $main-text-color;
+        & a {
+            color: $main-color;
+        }
+    }
+}
+
+.info-general{
+    display: flex;
+    &__stars{
+        @extend .heading4;
+        flex-direction: column;
+        font-family: 'Quicksand';
+        line-height: 18px;
+        color: $main-text-color;
+        opacity: 0.5;
+        transform: rotate(-0.16deg);
+    }
+    &__title{
+        @extend .heading1;
+        flex-direction: column;
+        color: $main-text-color;
+        line-height: 28px;
+        transform: rotate(-0.16deg);
+    }
+}
+.info-score{
+    display: flex;
+    flex-direction: column;
+    &__number{
+        @extend .heading1;
+    }
+    &__text{
+        @extend .heading4;
+    }
+}
+.hotel-location{
+    display: flex;
+    &__description{
+        @extend .text1;
+        & a{
+            color: $main-color;
+        }
+    }
+}
+.hotel-highlights{
+    display: flex;
+    align-self: flex-start;
+}
+
