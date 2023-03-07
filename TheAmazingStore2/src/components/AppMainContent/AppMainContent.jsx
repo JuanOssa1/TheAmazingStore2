@@ -8,8 +8,8 @@ export default function AppMainContent() {
     <div className={`${styles['main-content']}`}>
         <p className={`${styles['main-content__title']}`}>Iniciar Sesión</p>
         <BigInput title="Correo electrónico: "></BigInput>
-        <BigInput title="Contraseña: " type="password"></BigInput>
-        <ButtonBlue text="Ingresar"></ButtonBlue>
+        <BigInput title="Contraseña: " type="password" marginTop="15px"></BigInput>
+        <ButtonBlue text="Ingresar" margin="47px 0 17px 0"></ButtonBlue>
         <p className={`${styles['main-content__register']}`}>¿Aún no tenes cuenta? <a>Registrate</a></p>
     </div>
   );

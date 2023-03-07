@@ -7,7 +7,7 @@ export default function AppHeader() {
   return (
     <div className={`${styles['main-nav']}`}>
         <div className={`${styles['main-nav__left']}`}></div>
-        <ButtonWhite text="Crear cuenta"></ButtonWhite>
+        <ButtonWhite text="Crear cuenta" margin="33px 40px 10px"></ButtonWhite>
     </div>
   )
 }

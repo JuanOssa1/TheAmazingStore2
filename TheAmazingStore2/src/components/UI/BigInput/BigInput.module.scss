@@ -1,17 +1,24 @@
 @import "../../../constants/consts.scss";
 
-.big-input__input{
-    @extend .text2;
-    width: 448px;
-    height: 40px;
-    background-color: #FFFFFF;
-    /* input shadow */
-    //border-color: #e5e5e5;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
-    border-radius: 5px;
-}
-.big-input__title{
-    @extend .text2;
+.big-input{
+    //height: 77px;
+    //margin-top: 15px;
+    &__input{
+        @extend .text2;
+        width: 448px;
+        height: 40px;
+        background-color: #FFFFFF;
+        /* input shadow */
+        //border-color: #e5e5e5;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+    &__title{
+        @extend .text2;
+        height: 22px;
+    }
 }
 
 
