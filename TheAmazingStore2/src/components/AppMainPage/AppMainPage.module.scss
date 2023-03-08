@@ -1,0 +1,11 @@
+@import "../../constants/consts.scss";
+
+.main-page{
+    display: flex;
+    padding-top: 80px;
+    background-color: $main-background-color;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 58px);
+}

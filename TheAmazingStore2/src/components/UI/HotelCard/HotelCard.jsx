@@ -8,12 +8,12 @@ import styles from './HotelCard.module.scss'
 export default function HotelCard(props) {
     return (
         <section className={`${styles['hotel-card']}`}>
-            <img src="https://cf.bstatic.com/xdata/images/hotel/max500/359985903.jpg?k=d279753b694d94521eefe3ae7d1869de095a1cd9dd5fd8864b15c77fcd4adb12&o=&hp=1" alt="No cargo" className={`${styles['hotel-card__image']}`} />
+            <img src={props.image} alt="No cargo" className={`${styles['hotel-card__image']}`} />
             <section className={`${styles['info-wrapper']}`}>
                 <section className={`${styles['hotel-card__info']}`}>
                     <span className={`${styles['info-general']}`}>
                         <p className={`${styles['info-general__stars']}`}>HOTEL <AiFillStar style={{color:"#1dbeb4"}}/></p>
-                        <h1 className={`${styles['info-general__title']}`}>HermitHotel</h1>
+                        <h1 className={`${styles['info-general__title']}`}>{props.title}</h1>
                     </span>
                     <span className={`${styles['info-score']}`}>
                         <p className={`${styles['info-score__value']}`}>8</p>
@@ -28,7 +28,7 @@ export default function HotelCard(props) {
                     <AiOutlineWifi style={{width:"20px", height:"20px"}}/>
                     <TbSwimming style={{width:"28px", height:"28px"}}/>
                 </section>
-                <p className={`${styles['hotel-card__description']}`}>En el corazón de San Telmo, disfruta de un albergue inspirado en las pasiones de Buenos Aires.<a>más...</a></p>
+                <p className={`${styles['hotel-card__description']}`}>{props.description}<a> más...</a></p>
                 <ButtonBlue text="ver mas" width="296px" margin="8.19px 0 0 0" boxShadow="0px 2px 4px rgba(0, 0, 0, 0.12)"/>
             </section>
         </section>

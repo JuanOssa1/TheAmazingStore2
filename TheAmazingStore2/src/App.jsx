@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import AppHeader from './components/AppHeader/AppHeader'
-import AppMainContent from './components/AppMainContent/AppMainContent'
+import AppLogin from './components/AppLogin/AppLogin'
+import AppMainPage from './components/AppMainPage/AppMainPage'
 import AppFooter from './components/AppFooter/AppFooter'
 import './App.scss'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isValid, setValid] = useState(true)
 
   return (
     <div className="App">
       <section id='HeaderApp'>
-        <AppHeader></AppHeader>
-        <AppMainContent></AppMainContent>
-        <AppFooter></AppFooter>
+        <AppHeader/>
+        {!isValid && <AppLogin setValid={setValid}></AppLogin> }
+        {isValid && <AppMainPage/>}
+        <AppFooter/>
       </section>
     </div>
   )

@@ -21,7 +21,7 @@
     transform: rotate(-0.16deg);
 
     &__image {
-        width: 311px;
+        min-width: 311px;
         border-radius: 8px 8px 8px 8px;
         transform: rotate(-0.16deg);
     }
