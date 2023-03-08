@@ -11,7 +11,7 @@ export default function AppMainContent() {
         <BigInput title="Correo electrónico: "></BigInput>
         <BigInput title="Contraseña: " type="password" marginTop="15px"></BigInput>
         <ButtonBlue text="Ingresar" margin="47px 0 17px 0"></ButtonBlue>
-        
+        <HotelCard/>
         <p className={`${styles['main-content__register']}`}>¿Aún no tenes cuenta? <a>Registrate</a></p>
     </div>
   );

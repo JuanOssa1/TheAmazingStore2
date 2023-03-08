@@ -1,22 +1,42 @@
-@import "../../../constants/consts.scss";
-.hotel-card{
+@import '../../../constants/consts.scss';
+
+.info-wrapper {
     display: flex;
-    //flex-direction: row;
+    flex-direction: column;
+    padding: 20px 14px 12px 13.67px;
+    box-sizing: border-box;
+}
+
+.hotel-card {
+    display: flex;
     justify-content: space-between;
-    &__image{
-       width: 311px;
-       height: 331px; 
+    width: 635px;
+    height: 283px;
+    background: #ffffff;
+    /* A- DB COLOR 4 */
+
+    border: 1px solid #dfe4ea;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    transform: rotate(-0.16deg);
+
+    &__image {
+        width: 311px;
+        border-radius: 8px 8px 8px 8px;
+        transform: rotate(-0.16deg);
     }
-    &__info{
+
+    &__info {
         display: flex;
         flex-direction: row;
+        //justify-content: space-evenly
+        //justify-content: space-between
     }
-    &__specs{
-        display: flex;
-        flex-direction: column;
-    }
-    &__description{
+    &__description {
         @extend .text1;
+        margin-top: 39px;
+        width: 295px;
+        height: 52px;
         color: $main-text-color;
         & a {
             color: $main-color;
@@ -24,18 +44,23 @@
     }
 }
 
-.info-general{
+.info-general {
     display: flex;
-    &__stars{
+    flex-direction: column;
+    justify-content: center;
+
+    &__stars {
         @extend .heading4;
-        flex-direction: column;
-        font-family: 'Quicksand';
+        display: flex;
+        font-family: $secondary-font-family;
         line-height: 18px;
         color: $main-text-color;
         opacity: 0.5;
         transform: rotate(-0.16deg);
+        align-items: center
     }
-    &__title{
+
+    &__title {
         @extend .heading1;
         flex-direction: column;
         color: $main-text-color;
@@ -43,27 +68,45 @@
         transform: rotate(-0.16deg);
     }
 }
-.info-score{
+
+.info-score {
     display: flex;
     flex-direction: column;
-    &__number{
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 99px;
+    height: 43px;
+
+
+    &__number {
         @extend .heading1;
+        color: $main-text-color
     }
-    &__text{
+
+    &__text {
         @extend .heading4;
+        color: $main-text-color
     }
 }
-.hotel-location{
+
+.hotel-location {
     display: flex;
-    &__description{
+    margin-top: 20.14px;
+    &__description {
         @extend .text1;
-        & a{
+        width: 300px;
+        height: 22px;
+        margin-left: 5.96px;
+        & a {
             color: $main-color;
         }
     }
 }
-.hotel-highlights{
-    display: flex;
-    align-self: flex-start;
-}
 
+.hotel-highlights {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+    margin-top: 5.15px;
+}
