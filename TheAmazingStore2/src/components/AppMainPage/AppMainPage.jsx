@@ -4,8 +4,6 @@ import Hotels from '../../db/hotels.json'
 import HotelCard from '../UI/HotelCard/HotelCard'
 
 export default function AppMainPage() {
-    //const hotelsArray = JSON.parse(Hotels)
-    //console.log(hotelsArray)
   return (
     <section className={`${styles['main-page']}`}>
         {

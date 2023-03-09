@@ -6,7 +6,7 @@ import AppFooter from './components/AppFooter/AppFooter'
 import './App.scss'
 
 function App() {
-  const [isValid, setValid] = useState(true)
+  const [isValid, setValid] = useState(false)
 
   return (
     <div className="App">
