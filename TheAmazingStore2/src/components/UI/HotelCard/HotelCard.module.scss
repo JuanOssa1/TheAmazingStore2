@@ -4,7 +4,9 @@
     display: flex;
     flex-direction: column;
     padding: 20px 14px 12px 13.67px;
+    width: 320px;
     box-sizing: border-box;
+    //Y al wrapper hay que asignarle un tamaño para que funcione el wl spacebetween
 }
 
 .hotel-card {
@@ -21,7 +23,9 @@
     transform: rotate(-0.16deg);
 
     &__image {
-        min-width: 311px;
+        object-fit: cover;
+        width: 311px;
+        height: 283px;
         border-radius: 8px 8px 8px 8px;
         transform: rotate(-0.16deg);
     }
@@ -29,8 +33,7 @@
     &__info {
         display: flex;
         flex-direction: row;
-        //justify-content: space-evenly
-        //justify-content: space-between
+        justify-content: space-between
     }
     &__description {
         @extend .text1;
