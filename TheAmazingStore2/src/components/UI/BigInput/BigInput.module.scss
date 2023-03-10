@@ -1,34 +1,29 @@
-@import "../../../constants/consts.scss";
+@import '../../../constants/consts.scss';
 
-.big-input{
-    //height: 77px;
-    //margin-top: 15px;
-    &__input{
-        @extend .text2;
-        width: 448px;
-        height: 40px;
-        background-color: #FFFFFF;
-        /* input shadow */
-        //border-color: #e5e5e5;
-        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
-        border-radius: 5px;
-        border: none;
-        outline: none;
-    }
-    &__title{
-        @extend .text2;
-        height: 22px;
-    }
-}
-.invalid{
-    background: #FFE1E1;
-    border: 1px solid #FF0000;
+.big-input {
+  //height: 77px;
+  //margin-top: 15px;
+  &__input {
+    @extend .text2;
+    width: 448px;
+    height: 40px;
+    background-color: #ffffff;
     /* input shadow */
-
+    //border-color: #e5e5e5;
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
+    border: none;
+    outline: none;
+  }
+  &__title {
+    @extend .text2;
+    height: 22px;
+  }
 }
-
-
-
-
+.invalid {
+  background: #ffe1e1;
+  border: 1px solid #ff0000;
+  /* input shadow */
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+}

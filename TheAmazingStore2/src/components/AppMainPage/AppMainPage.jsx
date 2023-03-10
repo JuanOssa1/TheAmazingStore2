@@ -8,81 +8,122 @@ import FormTitle from '../UI/FormTitle/FormTitle';
 import { useState } from 'react';
 export default function AppMainPage() {
   const [userInput, setUserInput] = useState({
-    enteredTitle:"",
-    enteredDescription:"",
-    enteredUrl: "",
-    validInput: true
-  })
-  const validateInput = (currentValue) =>{
-    if(currentValue.length===0){
-      setUserInput(()=>{
-        return {validInput: false}
-      })
-    }
+    enteredTitle: '',
+    enteredDescription: '',
+    enteredUrl: '',
+    validTitle: true,
+    validDescription: true,
+    validUrl: true,
+  });
+  const [hotels, setHotels] = useState(Hotels.hotels);
 
-  }
-  const titleChangeHandler = (event) =>{
-    //let value1 = userInput.enteredEmail.trim() //Hacen lo mismo?
-    let value2 = event.target.value.trim()
-    validateEmail(value2)
-    setUserInput(()=>{
-      return {enteredTitle: event.target.value}
-    })
-  }
-  const descriptionChangeHandler = (event) =>{
-    //let value1 = userInput.enteredPassword.trim() //Hacen lo mismo?
-    let value2 = event.target.value.trim()
-    validatePassword(value2)
-    setUserInput(()=>{
-      return {enteredDescription: event.target.value}
-    })
-  }
-  const urlChangeHandler = (event) =>{
-    //let value1 = userInput.enteredPassword.trim() //Hacen lo mismo?
-    let value2 = event.target.value.trim()
-    validatePassword(value2)
-    setUserInput(()=>{
-      return {enteredUrl: event.target.value}
-    })
-  }
-  const formSubmitHandler = (event) =>{
+  const validateTitle = (currentValue) => {
+    if (currentValue.length === 0) {
+      setUserInput((prevState) => {
+        return { ...prevState, validTitle: false };
+      });
+    } else {
+      setUserInput((prevState) => {
+        return { ...prevState, validTitle: true };
+      });
+    }
+  };
+  const validateDescription = (currentValue) => {
+    if (currentValue.length === 0) {
+      setUserInput((prevState) => {
+        return { ...prevState, validDescription: false };
+      });
+    } else {
+      setUserInput((prevState) => {
+        return { ...prevState, validDescription: true };
+      });
+    }
+  };
+  const validateUrl = (currentValue) => {
+    if (currentValue.length === 0) {
+      setUserInput((prevState) => {
+        return { ...prevState, validUrl: false };
+      });
+    } else {
+      setUserInput((prevState) => {
+        return { ...prevState, validUrl: true };
+      });
+    }
+  };
+
+  const titleChangeHandler = (event) => {
+    let value2 = event.target.value.trim();
+    validateTitle(value2);
+    setUserInput((prevState) => {
+      return { ...prevState, enteredTitle: event.target.value };
+    });
+  };
+  const descriptionChangeHandler = (event) => {
+    let value2 = event.target.value.trim();
+    validateDescription(value2);
+    setUserInput((prevState) => {
+      return { ...prevState, enteredDescription: event.target.value };
+    });
+  };
+  const urlChangeHandler = (event) => {
+    let value2 = event.target.value.trim();
+    validateUrl(value2);
+    setUserInput((prevState) => {
+      return { ...prevState, enteredUrl: event.target.value };
+    });
+  };
+  const formSubmitHandler = (event) => {
     event.preventDefault();
-    if(userInput.validInput){
-      //Deberia crear un objeto o en este caso asi esta bien?
+    if (validateTitle && validateDescription && validateUrl) {
       const newHotel = {
         id: Math.random(),
         title: userInput.enteredTitle,
         description: userInput.enteredDescription,
-        image: userInput.enteredUrl
-      }
-
+        image: userInput.enteredUrl,
+      };
+      setHotels((prevState) => [...prevState, newHotel]);
+      console.log(newHotel);
     }
-    console.log(userInput.enteredEmail, userInput.enteredPassword)
-    validateLogin();
-    console.log(userInput.validEmail, userInput.validPassword)
-  }
+  };
+  console.log(hotels);
+  const onDeleteHotel = (idToRemove) => {
+    const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
+    console.log({ updatedHotels });
+    setHotels(updatedHotels);
+  };
   return (
     <section className={`${styles['main-page']}`}>
-      <span className="main-page__info">
-        {Hotels.hotels.map((item) => (
+      <span className={`${styles['main-page__info']}`}>
+        {hotels.map((item) => (
           <HotelCard
             key={item.id}
             title={item.title}
             description={item.description}
             image={item.image}
+            onClick={() => onDeleteHotel(item.id)}
           />
         ))}
       </span>
-      <span className={`${styles['main-page__form']}`}>
-        <form className={`${styles['main-form']}`}>
-          <FormTitle text="Agregar Hoteles"/>
-          {/**Aqui debria mandarle margn o no o el componente deberia ser tal como es sin padding ni nada?*/}
-          <BigInput title='Titulo:'/>
-          <BigInput title='Descripción' marginTop='15px'/>
-          <BigInput title='Image Url' marginTop='15px'/>
-          <ButtonBlue text="Agregar" margin="47px 0 17px 0" />
-        </form>
-      </span>
+      <form className={styles['main-page__form']} onSubmit={formSubmitHandler}>
+        <FormTitle text="Agregar Hoteles" />
+        <BigInput
+          title="Titulo:"
+          onChange={titleChangeHandler}
+          validInput={userInput.validTitle}
+        />
+        <BigInput
+          title="Descripción"
+          onChange={descriptionChangeHandler}
+          validInput={userInput.validDescription}
+        />
+        <BigInput
+          title="Image Url"
+          onChange={urlChangeHandler}
+          validInput={userInput.validUrl}
+        />
+        <ButtonBlue text="Agregar" /* className={styles['button-form']}  */ />
+      </form>
     </section>
   );
 }
+//Que es iterable y que es enumerable
