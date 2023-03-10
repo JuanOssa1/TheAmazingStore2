@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonBlue from '../ButtonBlue/ButtonBlue';
+import Button from '../Button/Button';
 import { AiFillStar, AiOutlineWifi } from 'react-icons/ai';
 import { GoLocation } from 'react-icons/go';
 import { TbSwimming } from 'react-icons/tb';
@@ -42,11 +42,9 @@ export default function HotelCard(props) {
           {props.description}
           <a> más...</a>
         </p>
-        <ButtonBlue
+        <Button
+          className={`${styles['card-button']}`}
           text="ver mas"
-          width="296px"
-          margin="8.19px 0 0 0"
-          boxShadow="0px 2px 4px rgba(0, 0, 0, 0.12)"
           onClick={props.onClick}
         />
       </section>

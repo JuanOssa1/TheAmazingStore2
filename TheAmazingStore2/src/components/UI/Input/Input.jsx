@@ -1,6 +1,6 @@
-import styles from './BigInput.module.scss';
+import styles from './Input.module.scss';
 
-export default function BigInput(props) {
+export default function Input(props) {
   {
     console.log(props.validInput);
   }

@@ -1,115 +1,119 @@
 @import '../../../constants/consts.scss';
 
 .info-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 14px 12px 13.67px;
-    width: 320px;
-    box-sizing: border-box;
-    //Y al wrapper hay que asignarle un tamaño para que funcione el wl spacebetween
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px 12px 13.67px;
+  width: 320px;
+  box-sizing: border-box;
+  //Y al wrapper hay que asignarle un tamaño para que funcione el wl spacebetween
 }
 
 .hotel-card {
-    display: flex;
-    justify-content: space-between;
-    width: 635px;
+  display: flex;
+  justify-content: space-between;
+  width: 635px;
+  height: 283px;
+  background: #ffffff;
+  /* A- DB COLOR 4 */
+
+  border: 1px solid #dfe4ea;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  transform: rotate(-0.16deg);
+
+  &__image {
+    object-fit: cover;
+    width: 311px;
     height: 283px;
-    background: #ffffff;
-    /* A- DB COLOR 4 */
-
-    border: 1px solid #dfe4ea;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    border-radius: 8px 8px 8px 8px;
     transform: rotate(-0.16deg);
+  }
 
-    &__image {
-        object-fit: cover;
-        width: 311px;
-        height: 283px;
-        border-radius: 8px 8px 8px 8px;
-        transform: rotate(-0.16deg);
+  &__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__description {
+    @extend .text1;
+    margin-top: 39px;
+    width: 295px;
+    height: 52px;
+    color: $main-text-color;
+    & a {
+      color: $main-color;
     }
-
-    &__info {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between
-    }
-    &__description {
-        @extend .text1;
-        margin-top: 39px;
-        width: 295px;
-        height: 52px;
-        color: $main-text-color;
-        & a {
-            color: $main-color;
-        }
-    }
+  }
 }
 
 .info-general {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__stars {
+    @extend .heading4;
     display: flex;
+    font-family: $secondary-font-family;
+    line-height: 18px;
+    color: $main-text-color;
+    opacity: 0.5;
+    transform: rotate(-0.16deg);
+    align-items: center;
+  }
+
+  &__title {
+    @extend .heading1;
     flex-direction: column;
-    justify-content: center;
-
-    &__stars {
-        @extend .heading4;
-        display: flex;
-        font-family: $secondary-font-family;
-        line-height: 18px;
-        color: $main-text-color;
-        opacity: 0.5;
-        transform: rotate(-0.16deg);
-        align-items: center
-    }
-
-    &__title {
-        @extend .heading1;
-        flex-direction: column;
-        color: $main-text-color;
-        line-height: 28px;
-        transform: rotate(-0.16deg);
-    }
+    color: $main-text-color;
+    line-height: 28px;
+    transform: rotate(-0.16deg);
+  }
 }
 
 .info-score {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    width: 99px;
-    height: 43px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 99px;
+  height: 43px;
 
+  &__number {
+    @extend .heading1;
+    color: $main-text-color;
+  }
 
-    &__number {
-        @extend .heading1;
-        color: $main-text-color
-    }
-
-    &__text {
-        @extend .heading4;
-        color: $main-text-color
-    }
+  &__text {
+    @extend .heading4;
+    color: $main-text-color;
+  }
 }
 
 .hotel-location {
-    display: flex;
-    margin-top: 20.14px;
-    &__description {
-        @extend .text1;
-        width: 300px;
-        height: 22px;
-        margin-left: 5.96px;
-        & a {
-            color: $main-color;
-        }
+  display: flex;
+  margin-top: 20.14px;
+  &__description {
+    @extend .text1;
+    width: 300px;
+    height: 22px;
+    margin-left: 5.96px;
+    & a {
+      color: $main-color;
     }
+  }
 }
 
 .hotel-highlights {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-start;
-    margin-top: 5.15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  margin-top: 5.15px;
+}
+.card-button {
+  width: 296px;
+  margin: 8.19px 0 0 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
 }

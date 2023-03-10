@@ -1,6 +1,6 @@
 import React from 'react';
-import BigInput from '../UI/BigInput/BigInput';
-import ButtonBlue from '../UI/ButtonBlue/ButtonBlue';
+import Input from '../UI/Input/Input';
+import Button from '../UI/Button/Button';
 import FormTitle from '../UI/FormTitle/FormTitle';
 import styles from './AppLogin.module.scss';
 import { useState } from 'react';
@@ -57,19 +57,19 @@ export default function AppLogin(props) {
 
   return (
     <form className={`${styles['main-content']}`} onSubmit={formSubmitHandler}>
-      <FormTitle text="Iniciar Sesión"></FormTitle>
-      <BigInput
+      <FormTitle text="Iniciar Sesión" />
+      <Input
         title="Correo electrónico: "
         onChange={emailChangeHandler}
         validInput={userInput.validEmail}
       />
-      <BigInput
+      <Input
         title="Contraseña: "
         type="password"
         onChange={passwordChangeHandler}
         validInput={userInput.validPassword}
-      ></BigInput>
-      <ButtonBlue text="Ingresar" />
+      />
+      <Button text="Ingresar" />
       <p className={`${styles['main-content__register']}`}>
         ¿Aún no tenes cuenta? <a>Registrate</a>
       </p>

@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './AppMainPage.module.scss';
 import Hotels from '../../db/hotels.json';
 import HotelCard from '../UI/HotelCard/HotelCard';
-import ButtonBlue from '../UI/ButtonBlue/ButtonBlue';
-import BigInput from '../UI/BigInput/BigInput';
+import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
 import { useState } from 'react';
 export default function AppMainPage() {
@@ -106,22 +106,22 @@ export default function AppMainPage() {
       </span>
       <form className={styles['main-page__form']} onSubmit={formSubmitHandler}>
         <FormTitle text="Agregar Hoteles" />
-        <BigInput
+        <Input
           title="Titulo:"
           onChange={titleChangeHandler}
           validInput={userInput.validTitle}
         />
-        <BigInput
+        <Input
           title="Descripción"
           onChange={descriptionChangeHandler}
           validInput={userInput.validDescription}
         />
-        <BigInput
+        <Input
           title="Image Url"
           onChange={urlChangeHandler}
           validInput={userInput.validUrl}
         />
-        <ButtonBlue text="Agregar" /* className={styles['button-form']}  */ />
+        <Button text="Agregar" />
       </form>
     </section>
   );
