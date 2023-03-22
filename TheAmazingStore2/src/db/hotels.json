@@ -1,0 +1,40 @@
+{
+    "hotels": [
+        {
+            "id": 1,
+            "title": "Hermitage Hotel",
+            "description": "En el corazón de San Telmo, disfruta de un albergue inspirado en las pasiones de Buenos Aires",
+            "image": "https://cf.bstatic.com/xdata/images/hotel/max500/359985903.jpg?k=d279753b694d94521eefe3ae7d1869de095a1cd9dd5fd8864b15c77fcd4adb12&o=&hp=1"
+        },
+        {
+            "id": 2,
+            "title": "Juans Hotel",
+            "description": "El mejor hotel del mundo mundial",
+            "image": "https://www.kayak.com.co/rimg/himg/ab/64/d9/expediav2-38713-6584af-750938.jpg?width=720&height=576&crop=true"
+        },
+        {
+            "id": 3,
+            "title": "Dinastia Hotel",
+            "description": "El hotel para descansar y pasarlo cool",
+            "image": "https://content.r9cdn.net/himg/62/c0/84/ice-85676218-68620422_3XL-430714.jpg"
+        },
+        {
+            "id": 4,
+            "title": "Marriot Hotel",
+            "description": "No se nunca he ido no tengo plata dicen que es bueno",
+            "image": "https://media-cdn.tripadvisor.com/media/photo-s/22/25/ce/ea/kingsford-hotel-manila.jpg"
+        },
+        {
+            "id": 5,
+            "title": "Intercontinental Hotel",
+            "description": "Joer este son las grandes ligas",
+            "image": "https://www.ghlhoteles.com/cache/68/17/6817fa2f267572353eab60e22660c9bc.jpg"
+        },
+        {
+            "id": 6,
+            "title": "Hilton Hotel",
+            "description": "Hotel costoso pero chevere",
+            "image": "https://static.toiimg.com/photo/msid-92079511,width-96,height-65.cms"
+        }
+    ]
+  }
