@@ -5,6 +5,8 @@ import HotelCard from '../UI/HotelCard/HotelCard';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
+import { collection, addDoc } from 'firebase/firestore';
+import * as firebase from '../../db/firebaseHotels';
 import { useState } from 'react';
 export default function AppMainPage() {
   const [userInput, setUserInput] = useState({
@@ -72,7 +74,8 @@ export default function AppMainPage() {
       return { ...prevState, enteredUrl: event.target.value };
     });
   };
-  const formSubmitHandler = (event) => {
+
+  const formSubmitHandler = async (event) => {
     event.preventDefault();
     if (validateTitle && validateDescription && validateUrl) {
       const newHotel = {
@@ -81,10 +84,20 @@ export default function AppMainPage() {
         description: userInput.enteredDescription,
         image: userInput.enteredUrl,
       };
+      try {
+        const docRef = await addDoc(
+          collection(firebase.db, 'hotels'),
+          newHotel
+        );
+        console.log('Document written with ID: ', docRef.id);
+      } catch (e) {
+        console.error('Error adding document: ', e);
+      }
       setHotels((prevState) => [...prevState, newHotel]);
       console.log(newHotel);
     }
   };
+
   const onDeleteHotel = (idToRemove) => {
     const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
     console.log({ updatedHotels });
