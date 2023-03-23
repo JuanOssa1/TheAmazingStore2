@@ -5,9 +5,9 @@ import HotelCard from '../UI/HotelCard/HotelCard';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import * as firebase from '../../db/firebaseHotels';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 export default function AppMainPage() {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
@@ -17,7 +17,7 @@ export default function AppMainPage() {
     validDescription: true,
     validUrl: true,
   });
-  const [hotels, setHotels] = useState(Hotels.hotels);
+  const [hotels, setHotels] = useState([]);
 
   const validateTitle = (currentValue) => {
     if (currentValue.length === 0) {
@@ -97,6 +97,15 @@ export default function AppMainPage() {
       console.log(newHotel);
     }
   };
+  useEffect(() => {
+    const getFirebaseHotels = async () => {
+      const querySnapshot = await getDocs(collection(firebase.db, 'hotels'));
+      const hotelList = querySnapshot.docs.map((doc) => doc.data());
+      setHotels(hotelList);
+      //setHotels((prevState) => [...prevState, hotelList]);
+    };
+    getFirebaseHotels();
+  }, [hotels]);
 
   const onDeleteHotel = (idToRemove) => {
     const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
@@ -106,9 +115,9 @@ export default function AppMainPage() {
   return (
     <section className={`${styles['main-page']}`}>
       <span className={`${styles['main-page__info']}`}>
-        {hotels.map((item) => (
+        {hotels.map((item, index) => (
           <HotelCard
-            key={item.id}
+            key={index}
             title={item.title}
             description={item.description}
             image={item.image}

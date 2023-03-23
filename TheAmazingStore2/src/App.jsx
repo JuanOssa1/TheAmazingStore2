@@ -6,7 +6,7 @@ import AppFooter from './components/AppFooter/AppFooter';
 import LogProvider from './context/LogProvider';
 
 function App() {
-  const [isValid, setValid] = useState(false);
+  const [isValid, setValid] = useState(true);
 
   return (
     <LogProvider className="App">
