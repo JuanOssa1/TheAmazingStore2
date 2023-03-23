@@ -1,9 +1,6 @@
 import styles from './Input.module.scss';
 
 export default function Input(props) {
-  {
-    console.log(props.validInput);
-  }
   return (
     <div className={`${styles['big-input']}`}>
       <p

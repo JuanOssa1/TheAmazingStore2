@@ -85,7 +85,6 @@ export default function AppMainPage() {
       console.log(newHotel);
     }
   };
-  console.log(hotels);
   const onDeleteHotel = (idToRemove) => {
     const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
     console.log({ updatedHotels });

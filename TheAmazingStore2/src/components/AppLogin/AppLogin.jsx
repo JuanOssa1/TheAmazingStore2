@@ -3,10 +3,13 @@ import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import FormTitle from '../UI/FormTitle/FormTitle';
 import styles from './AppLogin.module.scss';
-import { useState } from 'react';
+import LogContext from '../../context/log-context';
+import { useState, useContext } from 'react';
 
 export default function AppLogin(props) {
   const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+  const logCtx = useContext(LogContext);
+
   const [userInput, setUserInput] = useState({
     enteredEmail: '',
     enteredPassword: '',
@@ -31,11 +34,7 @@ export default function AppLogin(props) {
       }
     }
   };
-  const validateLogin = () => {
-    if (userInput.validEmail && userInput.validPassword) {
-      props.setValid(true);
-    }
-  };
+
   const emailChangeHandler = (event) => {
     let value2 = event.target.value.trim();
     validateEmail(value2);
@@ -50,13 +49,15 @@ export default function AppLogin(props) {
       return { ...prevState, enteredPassword: event.target.value };
     });
   };
-  const formSubmitHandler = (event) => {
-    event.preventDefault();
-    validateLogin();
+  const validateLogin = (event) => {
+    if (userInput.validEmail && userInput.validPassword) {
+      event.preventDefault();
+      props.setValid(logCtx.approveLogin());
+    }
   };
 
   return (
-    <form className={`${styles['main-content']}`} onSubmit={formSubmitHandler}>
+    <form className={`${styles['main-content']}`} onSubmit={validateLogin}>
       <FormTitle text="Iniciar Sesión" />
       <Input
         title="Correo electrónico: "
@@ -67,7 +68,7 @@ export default function AppLogin(props) {
         title="Contraseña: "
         type="password"
         onChange={passwordChangeHandler}
-        validInput={userInput.validPassword}
+        validInput={userInput.validPassword} //userInput.validPassword
       />
       <Button text="Ingresar" />
       <p className={`${styles['main-content__register']}`}>
