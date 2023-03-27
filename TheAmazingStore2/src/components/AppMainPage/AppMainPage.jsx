@@ -5,6 +5,7 @@ import HotelCard from '../UI/HotelCard/HotelCard';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
+import Stepper from '../UI/Stepper/Stepper';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import * as firebase from '../../db/firebaseHotels';
 import { useState, useEffect } from 'react';
@@ -13,6 +14,7 @@ export default function AppMainPage() {
     enteredTitle: '',
     enteredDescription: '',
     enteredUrl: '',
+    enteredStars: 0,
     validTitle: true,
     validDescription: true,
     validUrl: true,
@@ -74,6 +76,17 @@ export default function AppMainPage() {
       return { ...prevState, enteredUrl: event.target.value };
     });
   };
+  const changeStarsHandler = (value) => {
+    setUserInput((prevState) => {
+      return { ...prevState, enteredStars: value };
+    });
+  };
+
+  const getFirebaseHotels = async () => {
+    const querySnapshot = await getDocs(collection(firebase.db, 'hotels'));
+    const hotelList = querySnapshot.docs.map((doc) => doc.data());
+    setHotels(hotelList);
+  };
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
@@ -83,6 +96,7 @@ export default function AppMainPage() {
         title: userInput.enteredTitle,
         description: userInput.enteredDescription,
         image: userInput.enteredUrl,
+        enteredStars: userInput.enteredStars,
       };
       try {
         const docRef = await addDoc(
@@ -93,19 +107,14 @@ export default function AppMainPage() {
       } catch (e) {
         console.error('Error adding document: ', e);
       }
-      setHotels((prevState) => [...prevState, newHotel]);
-      console.log(newHotel);
+      //setHotels((prevState) => [...prevState, newHotel]);
+      getFirebaseHotels();
     }
   };
+  //getFirebaseHotels();
   useEffect(() => {
-    const getFirebaseHotels = async () => {
-      const querySnapshot = await getDocs(collection(firebase.db, 'hotels'));
-      const hotelList = querySnapshot.docs.map((doc) => doc.data());
-      setHotels(hotelList);
-      //setHotels((prevState) => [...prevState, hotelList]);
-    };
     getFirebaseHotels();
-  }, [hotels]);
+  }, []);
 
   const onDeleteHotel = (idToRemove) => {
     const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
@@ -121,6 +130,7 @@ export default function AppMainPage() {
             title={item.title}
             description={item.description}
             image={item.image}
+            stars={item.enteredStars}
             onClick={() => onDeleteHotel(item.id)}
           />
         ))}
@@ -142,7 +152,8 @@ export default function AppMainPage() {
           onChange={urlChangeHandler}
           validInput={userInput.validUrl}
         />
-        <Button text="Agregar" />
+        <Stepper onChange={changeStarsHandler} />
+        <Button className={`${styles['button-submit']}`} text="Agregar" />
       </form>
     </section>
   );

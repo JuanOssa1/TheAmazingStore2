@@ -6,6 +6,14 @@ import { TbSwimming } from 'react-icons/tb';
 import styles from './HotelCard.module.scss';
 
 export default function HotelCard(props) {
+  const renderStars = (quantity) => {
+    const stars = [];
+    for (let i = 0; i < quantity; i++) {
+      stars.push(<AiFillStar style={{ color: '#1dbeb4' }} />);
+    }
+    return stars;
+  };
+
   return (
     <section className={`${styles['hotel-card']}`}>
       <img
@@ -17,7 +25,7 @@ export default function HotelCard(props) {
         <section className={`${styles['hotel-card__info']}`}>
           <span className={`${styles['info-general']}`}>
             <p className={`${styles['info-general__stars']}`}>
-              HOTEL <AiFillStar style={{ color: '#1dbeb4' }} />
+              HOTEL {renderStars(props.stars)}
             </p>
             <h1 className={`${styles['info-general__title']}`}>
               {props.title}
