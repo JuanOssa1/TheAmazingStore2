@@ -17,7 +17,7 @@ const stepReducer = (state, action) => {
       currentScore++;
     }
     return {
-      stars: selectStars(currentScore),
+      stars: renderStars(currentScore),
       score: currentScore,
     };
   }
@@ -26,23 +26,20 @@ const stepReducer = (state, action) => {
       currentScore--;
     }
     return {
-      stars: selectStars(currentScore),
+      stars: renderStars(currentScore),
       score: currentScore,
     };
   }
 };
-const selectStars = (score) => {
-  if (score <= 2) {
-    return renderStars(score, 'red');
+
+const renderStars = (quantity) => {
+  let color = 'red';
+  if (quantity === 3) {
+    color = 'yellow';
   }
-  if (score === 3) {
-    return renderStars(score, 'yellow');
+  if (quantity >= 4) {
+    color = 'green';
   }
-  if (score >= 4) {
-    return renderStars(score, 'green');
-  }
-};
-const renderStars = (quantity, color) => {
   const stars = [];
   for (let i = 0; i < quantity; i++) {
     stars.push(<AiFillStar key={i} style={{ color: color }} />);
@@ -56,18 +53,18 @@ const Stepper = ({ onChange }) => {
     defaultStepState
   );
 
-  const addStarsHandler = (event) => {
-    event.preventDefault();
-    onChange(stepperState.score + 1);
+  const addStarsHandler = () => {
+    //onChange(stepperState.score + 1);
     dispatchStepper({
       type: 'ADD',
+      onChange: onChange(stepperState.score + 1),
     });
   };
-  const removeStarsHandler = (event) => {
-    event.preventDefault();
-    onChange(stepperState.score - 1);
+  const removeStarsHandler = () => {
+    //onChange(stepperState.score - 1);
     dispatchStepper({
       type: 'DECREASE',
+      onChange: onChange(stepperState.score - 1),
     });
   };
 
@@ -78,7 +75,7 @@ const Stepper = ({ onChange }) => {
         <Button
           onClick={removeStarsHandler}
           className={`${styles['stepper__button']}`}
-          text={'-'}
+          text="-"
           variant1
         />
         <FormTitle
@@ -88,7 +85,7 @@ const Stepper = ({ onChange }) => {
         <Button
           onClick={addStarsHandler}
           className={`${styles['stepper__button']}`}
-          text={'+'}
+          text="+"
           variant1
         />
       </div>

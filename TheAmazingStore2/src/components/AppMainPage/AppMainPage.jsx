@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './AppMainPage.module.scss';
 import Hotels from '../../db/hotels.json';
 import HotelCard from '../UI/HotelCard/HotelCard';
+import HotelAdditionalInfo from '../UI/HotelAdditionalInfo/HotelAdditionalInfo';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
@@ -20,6 +21,26 @@ export default function AppMainPage() {
     validUrl: true,
   });
   const [hotels, setHotels] = useState([]);
+  const [modalInfoState, setModalInfoState] = useState({
+    modalIsActivated: false,
+    valueToShow: '',
+  });
+
+  const showInfoModal = () => {
+    setModalInfoState((prevState) => {
+      return { ...prevState, modalIsActivated: true };
+    });
+  };
+  const hideInfoModal = () => {
+    setModalInfoState((prevState) => {
+      return { ...prevState, modalIsActivated: false };
+    });
+  };
+  const modalChangeInfoHandler = (value) => {
+    setModalInfoState((prevState) => {
+      return { ...prevState, valueToShow: value };
+    });
+  };
 
   const validateTitle = (currentValue) => {
     if (currentValue.length === 0) {
@@ -121,41 +142,55 @@ export default function AppMainPage() {
     console.log({ updatedHotels });
     setHotels(updatedHotels);
   };
+  const showAdditionalInfo = () => {};
+
   return (
-    <section className={`${styles['main-page']}`}>
-      <span className={`${styles['main-page__info']}`}>
-        {hotels.map((item, index) => (
-          <HotelCard
-            key={index}
-            title={item.title}
-            description={item.description}
-            image={item.image}
-            stars={item.enteredStars}
-            onClick={() => onDeleteHotel(item.id)}
+    <>
+      {modalInfoState.modalIsActivated && (
+        <HotelAdditionalInfo onClose={hideInfoModal} />
+      )}
+      <section className={`${styles['main-page']}`}>
+        <span className={`${styles['main-page__info']}`}>
+          {hotels.map((item, index) => (
+            <HotelCard
+              key={index}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+              stars={item.enteredStars}
+              onClick={() => showInfoModal()}
+            />
+          ))}
+        </span>
+        <form
+          className={styles['main-page__form']}
+          onSubmit={formSubmitHandler}
+        >
+          <FormTitle text="Agregar Hoteles" />
+          <Input
+            title="Titulo:"
+            onChange={titleChangeHandler}
+            validInput={userInput.validTitle}
           />
-        ))}
-      </span>
-      <form className={styles['main-page__form']} onSubmit={formSubmitHandler}>
-        <FormTitle text="Agregar Hoteles" />
-        <Input
-          title="Titulo:"
-          onChange={titleChangeHandler}
-          validInput={userInput.validTitle}
-        />
-        <Input
-          title="Descripción"
-          onChange={descriptionChangeHandler}
-          validInput={userInput.validDescription}
-        />
-        <Input
-          title="Image Url"
-          onChange={urlChangeHandler}
-          validInput={userInput.validUrl}
-        />
-        <Stepper onChange={changeStarsHandler} />
-        <Button className={`${styles['button-submit']}`} text="Agregar" />
-      </form>
-    </section>
+          <Input
+            title="Descripción"
+            onChange={descriptionChangeHandler}
+            validInput={userInput.validDescription}
+          />
+          <Input
+            title="Image Url"
+            onChange={urlChangeHandler}
+            validInput={userInput.validUrl}
+          />
+          <Stepper onChange={changeStarsHandler} />
+          <Button
+            className={`${styles['button-submit']}`}
+            text="Agregar"
+            type="submit"
+          />
+        </form>
+      </section>
+    </>
   );
 }
 //Que es iterable y que es enumerable

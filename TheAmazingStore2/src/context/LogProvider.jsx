@@ -15,7 +15,7 @@ function LogProvider({ children }) {
 
   const logContext = {
     approveLogin: validateLogin,
-    getValidity: getValidity,
+    getValidity,
     user: 'Juan David',
     isLogged: false,
     hotels: [],
