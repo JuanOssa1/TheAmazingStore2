@@ -142,12 +142,18 @@ export default function AppMainPage() {
     console.log({ updatedHotels });
     setHotels(updatedHotels);
   };
-  const showAdditionalInfo = () => {};
+  const showAdditionalInfo = (info) => {
+    modalChangeInfoHandler(info);
+    showInfoModal();
+  };
 
   return (
     <>
       {modalInfoState.modalIsActivated && (
-        <HotelAdditionalInfo onClose={hideInfoModal} />
+        <HotelAdditionalInfo
+          onClose={hideInfoModal}
+          info={modalInfoState.valueToShow}
+        />
       )}
       <section className={`${styles['main-page']}`}>
         <span className={`${styles['main-page__info']}`}>
@@ -158,7 +164,7 @@ export default function AppMainPage() {
               description={item.description}
               image={item.image}
               stars={item.enteredStars}
-              onClick={() => showInfoModal()}
+              onClick={() => showAdditionalInfo(item.id)}
             />
           ))}
         </span>
