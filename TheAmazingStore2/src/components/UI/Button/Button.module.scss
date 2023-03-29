@@ -2,13 +2,10 @@
 
 .button-blue {
   @extend .button2;
-  justify-self: end;
   background-color: $main-color;
   color: white;
 }
 .variant1 {
   @extend .button2;
-  justify-self: end;
-  align-self: end;
   background-color: #ffffff;
 }

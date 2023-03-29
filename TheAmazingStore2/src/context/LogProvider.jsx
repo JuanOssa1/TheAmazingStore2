@@ -5,19 +5,14 @@ import { useState } from 'react';
 function LogProvider({ children }) {
   const [isValid, setValid] = useState(false);
 
-  const validateLogin = () => {
-    setValid(true);
-    return isValid;
-  };
-  const getValidity = () => {
-    return isValid;
+  const setValidity = (value) => {
+    setValid(value);
   };
 
   const logContext = {
-    approveLogin: validateLogin,
-    getValidity,
+    setValidity,
+    isValid,
     user: 'Juan David',
-    isLogged: false,
     hotels: [],
   };
 

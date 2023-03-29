@@ -13,12 +13,17 @@ export default function HotelCard(props) {
     }
     return stars;
   };
+  const handleImageError = (e) => {
+    e.target.src =
+      'https://forum.cs-cart.com/uploads/default/original/1X/2f0984456f8dd47c5beb0a68b72c3d6cf62ef2aa.jpeg';
+  };
 
   return (
     <section className={`${styles['hotel-card']}`}>
       <img
         src={props.image}
         alt="No cargo"
+        onError={(e) => handleImageError(e)}
         className={`${styles['hotel-card__image']}`}
       />
       <section className={`${styles['info-wrapper']}`}>

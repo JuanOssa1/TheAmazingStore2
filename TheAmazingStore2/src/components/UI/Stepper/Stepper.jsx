@@ -16,6 +16,7 @@ const stepReducer = (state, action) => {
     if (currentScore < 5) {
       currentScore++;
     }
+    action.onChange(currentScore);
     return {
       stars: renderStars(currentScore),
       score: currentScore,
@@ -25,6 +26,7 @@ const stepReducer = (state, action) => {
     if (currentScore > 0) {
       currentScore--;
     }
+    action.onChange(currentScore);
     return {
       stars: renderStars(currentScore),
       score: currentScore,
@@ -54,23 +56,21 @@ const Stepper = ({ onChange }) => {
   );
 
   const addStarsHandler = () => {
-    //onChange(stepperState.score + 1);
     dispatchStepper({
       type: 'ADD',
-      onChange: onChange(stepperState.score + 1),
+      onChange,
     });
   };
   const removeStarsHandler = () => {
-    //onChange(stepperState.score - 1);
     dispatchStepper({
       type: 'DECREASE',
-      onChange: onChange(stepperState.score - 1),
+      onChange,
     });
   };
 
   return (
     <>
-      <FormTitle text={'Asignar numero de estrellas'}></FormTitle>
+      <FormTitle text={'Asignar numero de estrellas'} />
       <div className={`${styles['stepper']}`}>
         <Button
           onClick={removeStarsHandler}

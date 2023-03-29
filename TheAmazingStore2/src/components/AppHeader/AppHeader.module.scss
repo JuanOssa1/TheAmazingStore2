@@ -8,7 +8,16 @@
   height: 80px;
   background: #ffffff;
   z-index: 3;
+  &__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   &__button {
     margin: 33px 40px 10px;
+  }
+  &__input {
+    width: 50px;
   }
 }

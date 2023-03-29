@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
 const LogContext = createContext({
-  approveLogin: () => {},
-  getValidity: () => {},
+  setValidity: () => {},
+  isValid: true,
   user: 'Juan David',
   isLogged: false,
   hotels: [],

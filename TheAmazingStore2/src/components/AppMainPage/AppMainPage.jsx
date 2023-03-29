@@ -7,10 +7,10 @@ import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
 import Stepper from '../UI/Stepper/Stepper';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
 import * as firebase from '../../db/firebaseHotels';
 import { useState, useEffect } from 'react';
-export default function AppMainPage() {
+export default function AppMainPage({ searchState }) {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
     enteredDescription: '',
@@ -20,6 +20,7 @@ export default function AppMainPage() {
     validDescription: true,
     validUrl: true,
   });
+  const [isWriting, setIsWriting] = useState(false);
   const [hotels, setHotels] = useState([]);
   const [modalInfoState, setModalInfoState] = useState({
     modalIsActivated: false,
@@ -104,7 +105,15 @@ export default function AppMainPage() {
   };
 
   const getFirebaseHotels = async () => {
-    const querySnapshot = await getDocs(collection(firebase.db, 'hotels'));
+    let hotels = collection(firebase.db, 'hotels');
+    if (searchState) {
+      hotels = query(
+        collection(firebase.db, 'hotels'),
+        where('title', '>=', searchState),
+        where('title', '<=', searchState + '\uf8ff')
+      );
+    }
+    const querySnapshot = await getDocs(hotels);
     const hotelList = querySnapshot.docs.map((doc) => doc.data());
     setHotels(hotelList);
   };
@@ -128,14 +137,12 @@ export default function AppMainPage() {
       } catch (e) {
         console.error('Error adding document: ', e);
       }
-      //setHotels((prevState) => [...prevState, newHotel]);
       getFirebaseHotels();
     }
   };
-  //getFirebaseHotels();
   useEffect(() => {
     getFirebaseHotels();
-  }, []);
+  }, [searchState]);
 
   const onDeleteHotel = (idToRemove) => {
     const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
@@ -144,6 +151,7 @@ export default function AppMainPage() {
   };
   const showAdditionalInfo = (info) => {
     modalChangeInfoHandler(info);
+    console.log(searchState);
     showInfoModal();
   };
 

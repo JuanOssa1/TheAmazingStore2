@@ -6,7 +6,7 @@ import styles from './AppLogin.module.scss';
 import LogContext from '../../context/log-context';
 import { useState, useContext } from 'react';
 
-export default function AppLogin(props) {
+export default function AppLogin() {
   const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
   const logCtx = useContext(LogContext);
 
@@ -52,7 +52,7 @@ export default function AppLogin(props) {
   const validateLogin = (event) => {
     if (userInput.validEmail && userInput.validPassword) {
       event.preventDefault();
-      props.setValid(logCtx.approveLogin());
+      logCtx.setValidity(false);
     }
   };
 
@@ -70,7 +70,7 @@ export default function AppLogin(props) {
         onChange={passwordChangeHandler}
         validInput={userInput.validPassword} //userInput.validPassword
       />
-      <Button text="Ingresar" />
+      <Button text="Ingresar" type="submit" />
       <p className={`${styles['main-content__register']}`}>
         ¿Aún no tenes cuenta? <a>Registrate</a>
       </p>
