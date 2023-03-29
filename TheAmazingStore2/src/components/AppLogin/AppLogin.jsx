@@ -13,12 +13,16 @@ export default function AppLogin() {
   const [userInput, setUserInput] = useState({
     enteredEmail: '',
     enteredPassword: '',
-    validEmail: false,
-    validPassword: false,
+    validEmail: true,
+    validPassword: true,
   });
   const validateEmail = (currentValue) => {
     if (currentValue.length > 0) {
-      if (currentValue.includes('@')) {
+      if (!currentValue.includes('@')) {
+        setUserInput((prevState) => {
+          return { ...prevState, validEmail: false };
+        });
+      } else {
         setUserInput((prevState) => {
           return { ...prevState, validEmail: true };
         });
@@ -26,12 +30,14 @@ export default function AppLogin() {
     }
   };
   const validatePassword = (currentValue) => {
-    if (currentValue.length > 8) {
-      if (specialCharacters.test(currentValue)) {
-        setUserInput((prevState) => {
-          return { ...prevState, validPassword: true };
-        });
-      }
+    if (currentValue.length < 8 || !specialCharacters.test(currentValue)) {
+      setUserInput((prevState) => {
+        return { ...prevState, validPassword: false };
+      });
+    } else {
+      setUserInput((prevState) => {
+        return { ...prevState, validPassword: true };
+      });
     }
   };
 
@@ -50,9 +56,12 @@ export default function AppLogin() {
     });
   };
   const validateLogin = (event) => {
+    event.preventDefault();
+    console.log(userInput.enteredPassword);
     if (userInput.validEmail && userInput.validPassword) {
-      event.preventDefault();
-      logCtx.setValidity(false);
+      if (userInput.enteredEmail && userInput.enteredPassword) {
+        logCtx.setValidity(true);
+      }
     }
   };
 
