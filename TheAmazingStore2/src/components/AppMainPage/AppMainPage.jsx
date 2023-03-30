@@ -10,6 +10,7 @@ import Stepper from '../UI/Stepper/Stepper';
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
 import * as firebase from '../../db/firebaseHotels';
 import { useState, useEffect } from 'react';
+import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 export default function AppMainPage({ searchState }) {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
@@ -20,7 +21,7 @@ export default function AppMainPage({ searchState }) {
     validDescription: true,
     validUrl: true,
   });
-  const [isWriting, setIsWriting] = useState(false);
+  const [loaded, setLoaded] = useState(undefined);
   const [hotels, setHotels] = useState([]);
   const [modalInfoState, setModalInfoState] = useState({
     modalIsActivated: false,
@@ -116,6 +117,7 @@ export default function AppMainPage({ searchState }) {
     const querySnapshot = await getDocs(hotels);
     const hotelList = querySnapshot.docs.map((doc) => doc.data());
     setHotels(hotelList);
+    setLoaded(true);
   };
 
   const formSubmitHandler = async (event) => {
@@ -151,12 +153,12 @@ export default function AppMainPage({ searchState }) {
   };
   const showAdditionalInfo = (info) => {
     modalChangeInfoHandler(info);
-    console.log(searchState);
     showInfoModal();
   };
 
   return (
     <>
+      {!loaded && <LoadingScreen />}
       {modalInfoState.modalIsActivated && (
         <HotelAdditionalInfo
           onClose={hideInfoModal}

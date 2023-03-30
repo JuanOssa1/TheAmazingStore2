@@ -3,7 +3,7 @@ import LogContext from './log-context';
 import { useState } from 'react';
 
 function LogProvider({ children }) {
-  const [isValid, setValid] = useState(false);
+  const [isValid, setValid] = useState(true);
 
   const setValidity = (value) => {
     setValid(value);
