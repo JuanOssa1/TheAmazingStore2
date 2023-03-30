@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './AppMainPage.module.scss';
-import Hotels from '../../db/hotels.json';
 import HotelCard from '../UI/HotelCard/HotelCard';
 import HotelAdditionalInfo from '../UI/HotelAdditionalInfo/HotelAdditionalInfo';
 import Button from '../UI/Button/Button';
@@ -21,7 +20,7 @@ export default function AppMainPage({ searchState }) {
     validDescription: true,
     validUrl: true,
   });
-  const [loaded, setLoaded] = useState(undefined);
+  const [loading, setLoading] = useState(false);
   const [hotels, setHotels] = useState([]);
   const [modalInfoState, setModalInfoState] = useState({
     modalIsActivated: false,
@@ -30,17 +29,24 @@ export default function AppMainPage({ searchState }) {
 
   const showInfoModal = () => {
     setModalInfoState((prevState) => {
-      return { ...prevState, modalIsActivated: true };
+      return { ...prevState, modalIsActivated: !prevState.modalIsActivated };
     });
   };
+  //combinarlo conel d arriba
   const hideInfoModal = () => {
     setModalInfoState((prevState) => {
       return { ...prevState, modalIsActivated: false };
     });
   };
-  const modalChangeInfoHandler = (value) => {
+  const modalChangeInfoHandler = async (id) => {
+    let hotels = query(
+      collection(firebase.db, 'hotels'),
+      where('id', '==', id)
+    );
+    const querySnapshot = await getDocs(hotels);
+    const hotelList = querySnapshot.docs.map((doc) => doc.data());
     setModalInfoState((prevState) => {
-      return { ...prevState, valueToShow: value };
+      return { ...prevState, valueToShow: hotelList[0].id };
     });
   };
 
@@ -106,18 +112,23 @@ export default function AppMainPage({ searchState }) {
   };
 
   const getFirebaseHotels = async () => {
-    let hotels = collection(firebase.db, 'hotels');
-    if (searchState) {
-      hotels = query(
-        collection(firebase.db, 'hotels'),
-        where('title', '>=', searchState),
-        where('title', '<=', searchState + '\uf8ff')
-      );
+    try {
+      setLoading(true);
+      let hotels = collection(firebase.db, 'hotels');
+      if (searchState) {
+        hotels = query(
+          collection(firebase.db, 'hotels'),
+          where('title', '>=', searchState),
+          where('title', '<=', searchState + '\uf8ff')
+        );
+      }
+      const querySnapshot = await getDocs(hotels);
+      const hotelList = querySnapshot.docs.map((doc) => doc.data());
+      setHotels(hotelList);
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
-    const querySnapshot = await getDocs(hotels);
-    const hotelList = querySnapshot.docs.map((doc) => doc.data());
-    setHotels(hotelList);
-    setLoaded(true);
   };
 
   const formSubmitHandler = async (event) => {
@@ -146,11 +157,6 @@ export default function AppMainPage({ searchState }) {
     getFirebaseHotels();
   }, [searchState]);
 
-  const onDeleteHotel = (idToRemove) => {
-    const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
-    console.log({ updatedHotels });
-    setHotels(updatedHotels);
-  };
   const showAdditionalInfo = (info) => {
     modalChangeInfoHandler(info);
     showInfoModal();
@@ -158,7 +164,7 @@ export default function AppMainPage({ searchState }) {
 
   return (
     <>
-      {!loaded && <LoadingScreen />}
+      {loading && <LoadingScreen />}
       {modalInfoState.modalIsActivated && (
         <HotelAdditionalInfo
           onClose={hideInfoModal}

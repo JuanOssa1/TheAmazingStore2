@@ -9,7 +9,7 @@ export default function HotelCard(props) {
   const renderStars = (quantity) => {
     const stars = [];
     for (let i = 0; i < quantity; i++) {
-      stars.push(<AiFillStar style={{ color: '#1dbeb4' }} />);
+      stars.push(<AiFillStar key={i} style={{ color: '#1dbeb4' }} />);
     }
     return stars;
   };

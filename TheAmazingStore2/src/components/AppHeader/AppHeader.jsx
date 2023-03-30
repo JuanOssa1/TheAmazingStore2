@@ -4,6 +4,7 @@ import LogContext from '../../context/log-context';
 import FormTitle from '../UI/FormTitle/FormTitle';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
+import logo from '../../assets/logo.png';
 import { useContext } from 'react';
 
 export default function AppHeader({ setSearchState }) {
@@ -19,7 +20,13 @@ export default function AppHeader({ setSearchState }) {
 
   return (
     <div className={`${styles['main-nav']}`}>
-      <div className={`${styles['main-nav__left']}`} />
+      <div className={`${styles['main-nav__left']}`}>
+        <img
+          src={logo}
+          alt="Deberia haber un logo"
+          className={`${styles['nav-logo']}`}
+        ></img>
+      </div>
       <div className={`${styles['main-nav__right']}`}>
         {!logCtx.isValid && (
           <Button
