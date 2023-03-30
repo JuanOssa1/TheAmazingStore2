@@ -6,18 +6,31 @@ import { TbSwimming } from 'react-icons/tb';
 import styles from './HotelCard.module.scss';
 
 export default function HotelCard(props) {
+  const renderStars = (quantity) => {
+    const stars = [];
+    for (let i = 0; i < quantity; i++) {
+      stars.push(<AiFillStar key={i} style={{ color: '#1dbeb4' }} />);
+    }
+    return stars;
+  };
+  const handleImageError = (e) => {
+    e.target.src =
+      'https://forum.cs-cart.com/uploads/default/original/1X/2f0984456f8dd47c5beb0a68b72c3d6cf62ef2aa.jpeg';
+  };
+
   return (
     <section className={`${styles['hotel-card']}`}>
       <img
         src={props.image}
         alt="No cargo"
+        onError={(e) => handleImageError(e)}
         className={`${styles['hotel-card__image']}`}
       />
       <section className={`${styles['info-wrapper']}`}>
         <section className={`${styles['hotel-card__info']}`}>
           <span className={`${styles['info-general']}`}>
             <p className={`${styles['info-general__stars']}`}>
-              HOTEL <AiFillStar style={{ color: '#1dbeb4' }} />
+              HOTEL {renderStars(props.stars)}
             </p>
             <h1 className={`${styles['info-general__title']}`}>
               {props.title}

@@ -1,0 +1,21 @@
+@import '../../../constants/consts.scss';
+.stepper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &__button {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+  }
+  &__counter {
+    padding: 0 5px 0 5px;
+  }
+}
+
+.stars-showcase {
+  display: flex;
+  flex-direction: row;
+}

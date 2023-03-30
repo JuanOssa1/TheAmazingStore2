@@ -1,6 +1,5 @@
 @import '../../../constants/consts.scss';
-.form-title{
-    @extend .heading1;
-    height: 40px;
-    margin-bottom: 9px;
+.form-title {
+  @extend .heading1;
+  //margin-bottom: 9px;
 }

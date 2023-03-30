@@ -1,21 +1,54 @@
 import React from 'react';
 import styles from './AppMainPage.module.scss';
-import Hotels from '../../db/hotels.json';
 import HotelCard from '../UI/HotelCard/HotelCard';
+import HotelAdditionalInfo from '../UI/HotelAdditionalInfo/HotelAdditionalInfo';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import FormTitle from '../UI/FormTitle/FormTitle';
-import { useState } from 'react';
-export default function AppMainPage() {
+import Stepper from '../UI/Stepper/Stepper';
+import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
+import * as firebase from '../../db/firebaseHotels';
+import { useState, useEffect } from 'react';
+import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
+export default function AppMainPage({ searchState }) {
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
     enteredDescription: '',
     enteredUrl: '',
+    enteredStars: 0,
     validTitle: true,
     validDescription: true,
     validUrl: true,
   });
-  const [hotels, setHotels] = useState(Hotels.hotels);
+  const [loading, setLoading] = useState(false);
+  const [hotels, setHotels] = useState([]);
+  const [modalInfoState, setModalInfoState] = useState({
+    modalIsActivated: false,
+    valueToShow: '',
+  });
+
+  const showInfoModal = () => {
+    setModalInfoState((prevState) => {
+      return { ...prevState, modalIsActivated: !prevState.modalIsActivated };
+    });
+  };
+  //combinarlo conel d arriba
+  const hideInfoModal = () => {
+    setModalInfoState((prevState) => {
+      return { ...prevState, modalIsActivated: false };
+    });
+  };
+  const modalChangeInfoHandler = async (id) => {
+    let hotels = query(
+      collection(firebase.db, 'hotels'),
+      where('id', '==', id)
+    );
+    const querySnapshot = await getDocs(hotels);
+    const hotelList = querySnapshot.docs.map((doc) => doc.data());
+    setModalInfoState((prevState) => {
+      return { ...prevState, valueToShow: hotelList[0].id };
+    });
+  };
 
   const validateTitle = (currentValue) => {
     if (currentValue.length === 0) {
@@ -72,7 +105,33 @@ export default function AppMainPage() {
       return { ...prevState, enteredUrl: event.target.value };
     });
   };
-  const formSubmitHandler = (event) => {
+  const changeStarsHandler = (value) => {
+    setUserInput((prevState) => {
+      return { ...prevState, enteredStars: value };
+    });
+  };
+
+  const getFirebaseHotels = async () => {
+    try {
+      setLoading(true);
+      let hotels = collection(firebase.db, 'hotels');
+      if (searchState) {
+        hotels = query(
+          collection(firebase.db, 'hotels'),
+          where('title', '>=', searchState),
+          where('title', '<=', searchState + '\uf8ff')
+        );
+      }
+      const querySnapshot = await getDocs(hotels);
+      const hotelList = querySnapshot.docs.map((doc) => doc.data());
+      setHotels(hotelList);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formSubmitHandler = async (event) => {
     event.preventDefault();
     if (validateTitle && validateDescription && validateUrl) {
       const newHotel = {
@@ -80,50 +139,80 @@ export default function AppMainPage() {
         title: userInput.enteredTitle,
         description: userInput.enteredDescription,
         image: userInput.enteredUrl,
+        enteredStars: userInput.enteredStars,
       };
-      setHotels((prevState) => [...prevState, newHotel]);
-      console.log(newHotel);
+      try {
+        const docRef = await addDoc(
+          collection(firebase.db, 'hotels'),
+          newHotel
+        );
+        console.log('Document written with ID: ', docRef.id);
+      } catch (e) {
+        console.error('Error adding document: ', e);
+      }
+      getFirebaseHotels();
     }
   };
-  console.log(hotels);
-  const onDeleteHotel = (idToRemove) => {
-    const updatedHotels = hotels.filter((hotel) => idToRemove !== hotel.id);
-    console.log({ updatedHotels });
-    setHotels(updatedHotels);
+  useEffect(() => {
+    getFirebaseHotels();
+  }, [searchState]);
+
+  const showAdditionalInfo = (info) => {
+    modalChangeInfoHandler(info);
+    showInfoModal();
   };
+
   return (
-    <section className={`${styles['main-page']}`}>
-      <span className={`${styles['main-page__info']}`}>
-        {hotels.map((item) => (
-          <HotelCard
-            key={item.id}
-            title={item.title}
-            description={item.description}
-            image={item.image}
-            onClick={() => onDeleteHotel(item.id)}
+    <>
+      {loading && <LoadingScreen />}
+      {modalInfoState.modalIsActivated && (
+        <HotelAdditionalInfo
+          onClose={hideInfoModal}
+          info={modalInfoState.valueToShow}
+        />
+      )}
+      <section className={`${styles['main-page']}`}>
+        <span className={`${styles['main-page__info']}`}>
+          {hotels.map((item, index) => (
+            <HotelCard
+              key={index}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+              stars={item.enteredStars}
+              onClick={() => showAdditionalInfo(item.id)}
+            />
+          ))}
+        </span>
+        <form
+          className={styles['main-page__form']}
+          onSubmit={formSubmitHandler}
+        >
+          <FormTitle text="Agregar Hoteles" />
+          <Input
+            title="Titulo:"
+            onChange={titleChangeHandler}
+            validInput={userInput.validTitle}
           />
-        ))}
-      </span>
-      <form className={styles['main-page__form']} onSubmit={formSubmitHandler}>
-        <FormTitle text="Agregar Hoteles" />
-        <Input
-          title="Titulo:"
-          onChange={titleChangeHandler}
-          validInput={userInput.validTitle}
-        />
-        <Input
-          title="Descripción"
-          onChange={descriptionChangeHandler}
-          validInput={userInput.validDescription}
-        />
-        <Input
-          title="Image Url"
-          onChange={urlChangeHandler}
-          validInput={userInput.validUrl}
-        />
-        <Button text="Agregar" />
-      </form>
-    </section>
+          <Input
+            title="Descripción"
+            onChange={descriptionChangeHandler}
+            validInput={userInput.validDescription}
+          />
+          <Input
+            title="Image Url"
+            onChange={urlChangeHandler}
+            validInput={userInput.validUrl}
+          />
+          <Stepper onChange={changeStarsHandler} />
+          <Button
+            className={`${styles['button-submit']}`}
+            text="Agregar"
+            type="submit"
+          />
+        </form>
+      </section>
+    </>
   );
 }
 //Que es iterable y que es enumerable
